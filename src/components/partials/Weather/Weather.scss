@@ -1,0 +1,42 @@
+.weather-container {
+  background-color: #1F222B;
+  color: white;
+  height: 100%;
+  width: 50%;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+
+  .weather {
+    margin: 15px 20px;
+  }
+
+  .temp-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 5px 20px;
+
+    & span:first-child {
+      font-size: xxx-large;
+    }
+  };
+
+  .specs {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  .title {
+    border-bottom: 1px solid;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: xxx-large;
+  }
+
+  .favorite-button {
+    margin: 10px;
+  }
+
+}
