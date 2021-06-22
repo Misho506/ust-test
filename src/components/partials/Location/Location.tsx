@@ -1,7 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import {
-  Select, MenuItem, Button, InputLabel, FormControl, Box,
+  Select, MenuItem, Button, InputLabel, FormControl, Box, FormHelperText,
 } from '@material-ui/core';
+import { toast } from 'react-toastify';
 import useSelector from '../../../hooks/useSelector';
 
 import cities from '../../../constants/cities';
@@ -14,20 +15,40 @@ type LocationProps = {
 
 const Location = ({ setNewLocation }: LocationProps): ReactElement => {
   const [name, setName] = useState('');
+  const [hasErrors, setHasErrors] = useState(false);
   const { favorites } = useSelector((s) => s.location);
+
+  const clearLocation = () => {
+    setName('');
+    toast.info('Clear location information');
+  };
+
+  const findLocation = () => {
+    if (name) {
+      toast.success('Location updated successfully');
+      setNewLocation(name);
+      setHasErrors(false);
+    } else {
+      toast.error('First Select a location');
+      setHasErrors(true);
+    }
+  };
 
   return (
     <div className="location-container">
       <div className="select-container">
-        <FormControl className="select-location">
-          <InputLabel htmlFor="location">Choose a Location</InputLabel>
+        <FormControl className="select-location" error={hasErrors}>
+          <InputLabel htmlFor="locatio">Choose a Location</InputLabel>
           <Select
             inputProps={{
               name: 'location',
               id: 'location',
             }}
             value={name}
-            onChange={(e) => setName(e.target.value as string)}
+            onChange={(e) => {
+              setHasErrors(false);
+              setName(e.target.value as string);
+            }}
           >
             {cities.map((city) => (
               <MenuItem key={city} value={city}>
@@ -35,8 +56,10 @@ const Location = ({ setNewLocation }: LocationProps): ReactElement => {
               </MenuItem>
             ))}
           </Select>
+          {hasErrors
+          && <FormHelperText>First Select a location</FormHelperText>}
         </FormControl>
-        <Button className="find-button" variant="contained" color="primary" onClick={() => name && setNewLocation(name)}>
+        <Button className="find-button" variant="contained" color="primary" onClick={findLocation}>
           Find
         </Button>
         {favorites.length > 0 && (
@@ -52,7 +75,7 @@ const Location = ({ setNewLocation }: LocationProps): ReactElement => {
         </Box>
         )}
       </div>
-      <Button className="clear-button" variant="contained" color="primary" onClick={() => setName('')}>
+      <Button className="clear-button" variant="contained" color="primary" onClick={clearLocation}>
         Clear
       </Button>
     </div>

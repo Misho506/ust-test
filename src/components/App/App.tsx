@@ -3,10 +3,12 @@ import {
   BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { ToastContainer } from 'react-toastify';
 import Home from '../pages/Home/Home';
 
 // Custom Theme
 import customTheme from '../../utils/customTheme';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './App.scss';
 
@@ -19,6 +21,7 @@ function App() {
             <Route exact path="/" component={Home} />
           </Switch>
         </Router>
+        <ToastContainer />
       </ThemeProvider>
     </div>
   );
