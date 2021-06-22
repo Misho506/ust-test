@@ -1,4 +1,20 @@
 .home-container {
   width: 100%;
   height: 100%;
+
+  .cold {
+    background-color: #0d847c;
+  }
+
+  .warm {
+    background-color: #aba200;
+  }
+
+  .neutral {
+    background-color: #1F222B;
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 }

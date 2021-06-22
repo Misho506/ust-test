@@ -1,5 +1,4 @@
 .weather-container {
-  background-color: #1F222B;
   color: white;
   height: 100%;
   width: 50%;
@@ -39,4 +38,7 @@
     margin: 10px;
   }
 
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 }
