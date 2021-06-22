@@ -11,6 +11,7 @@ const cities: string[] = [
   'Orlando',
   'New Jersey',
   'Texas',
+  'Iceland',
 ];
 
 export default cities;

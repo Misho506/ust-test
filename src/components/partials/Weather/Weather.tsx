@@ -1,7 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { addToFavorites } from 'store/slices/locationSlice';
+import { toast } from 'react-toastify';
+import useSelector from '../../../hooks/useSelector';
 
 import './Weather.scss';
 
@@ -19,9 +21,31 @@ type WeatherProps = {
 
 const Weather = ({ weather }: WeatherProps): ReactElement => {
   const dispatch = useDispatch();
+  const [temp, setTemp] = useState<'neutral' | 'warm' | 'cold'>('neutral');
+  const { favorites } = useSelector((s) => s.location);
+
+  const updateFavorites = () => {
+    if (favorites.find((currentWeather) => currentWeather.name === weather.name)) {
+      toast.warning(`${weather.name} is already in favorites`);
+    } else {
+      toast.success(`${weather.name} added to favorites`);
+      dispatch(addToFavorites(weather));
+    }
+  };
+
+  useEffect(() => {
+    if (weather.name) {
+      if (weather.temp < 15) {
+        setTemp('cold');
+      }
+      if (weather.temp > 23) {
+        setTemp('warm');
+      }
+    }
+  }, [weather]);
 
   return (
-    <div className="weather-container">
+    <div className={`weather-container ${temp}`}>
       { weather.name
     && (
       <>
@@ -63,7 +87,7 @@ const Weather = ({ weather }: WeatherProps): ReactElement => {
             </span>
           </div>
         </div>
-        <Button onClick={() => dispatch(addToFavorites(weather))} className="favorite-button" variant="contained" color="primary">
+        <Button onClick={updateFavorites} className="favorite-button" variant="contained" color="primary">
           Add to Favorites
         </Button>
       </>

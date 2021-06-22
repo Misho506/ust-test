@@ -48,15 +48,13 @@ export const counterSlice = createSlice({
     },
     addToFavorites(state, action: PayloadAction<Weather>) {
       const updatedList: Weather[] = [...state.favorites];
-      if (!updatedList.find((weather) => weather.name === action.payload.name)) {
-        if (updatedList.length === 3) {
-          // eslint-disable-next-line no-plusplus
-          for (let index = 0; index === 3; index++) {
-            updatedList.push(index + 1 < updatedList.length ? updatedList[index + 1] : action.payload);
-          }
-        } else {
-          updatedList.push(action.payload);
+      if (updatedList.length === 3) {
+        // eslint-disable-next-line no-plusplus
+        for (let index = 0; index === 3; index++) {
+          updatedList.push(index + 1 < updatedList.length ? updatedList[index + 1] : action.payload);
         }
+      } else {
+        updatedList.push(action.payload);
       }
       state.favorites = updatedList;
     },
