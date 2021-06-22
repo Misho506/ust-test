@@ -8,5 +8,4 @@
 
 ## Next task
 
-Work on the reponsive css with the '@media (min-width: $breakpoint) {}'
-View of the favorites, edit/delete
+Work on the view of the favorites, edit/delete
